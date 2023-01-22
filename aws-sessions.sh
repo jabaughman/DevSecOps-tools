@@ -1,14 +1,17 @@
 #!/bin/bash
 
-#These are your config settings and must be filled out prior to executing the script. 
+#These are your config settings and must be filled out prior to executing the script.
 #You can find this info in the AWS IAM Console under your user account 'Security Credentials'
 #Once you are ready, the script must executable via 'chmod +x finlename.sh'
-#Then run the script with 'source filename.sh'
+#Then run the command 'source ~/.bash_profile'
 
-IAM_USER_ACCOUNT=iam-user-account
-MFA_TOKEN=token-from-authenticator
-MFA_SERIAL_NUM=iam-mfa-serial-num
+
+IAM_USER_ACCOUNT=jbaughman@beyondfinance.com
+MFA_SERIAL_NUM=arn:aws:iam::078342479505:mfa/jbaughman@beyondfinance.com
 file_path="/tmp/data.json"
+
+#Prompt user for MFA token
+read -p "Enter your MFA token: " MFA_TOKEN
 
 #Get session token from AWS
 aws sts get-session-token --serial-number $MFA_SERIAL_NUM --token-code $MFA_TOKEN >> $file_path
@@ -23,9 +26,9 @@ SecretAccessKey=$(jq -r '.Credentials.SecretAccessKey' $file_path)
 SessionToken=$(jq -r '.Credentials.SessionToken' $file_path)
 
 #Export credentials as env vars
-export AWS_ACCESS_KEY_ID=$AccessKeyId
-export AWS_SECRET_ACCESS_KEY=$SecretAccessKey
-export AWS_SESSION_TOKEN=$SessionToken
+echo "export AWS_ACCESS_KEY_ID=$AccessKeyId" >> ~/.bash_profile
+echo "export AWS_SECRET_ACCESS_KEY=$SecretAccessKey" >> ~/.bash_profile
+echo "export AWS_SESSION_TOKEN=$SessionToken" >> ~/.bash_profile
 
 #Remove json file
 if test ! -f $file_path; then
@@ -33,3 +36,5 @@ if test ! -f $file_path; then
   exit 1
 fi
 rm $file_path
+
+echo "Script ran successfully, make sure to run the command: source ~/.bash_profile, to reload your .bash_profile"
