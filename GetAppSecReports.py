@@ -4,7 +4,7 @@ from datetime import datetime
 from dateutil.parser import isoparse
 
 base_url = 'https://us.api.insight.rapid7.com/ias/v1'
-api_key = 'd64311f2-f524-4ce0-a6ac-b0ba8391065e'
+api_key = ''
 headers = {'X-Api-Key': api_key, 'Content-Type': 'application/json'}
 
 reports_url = f'{base_url}/reports'
