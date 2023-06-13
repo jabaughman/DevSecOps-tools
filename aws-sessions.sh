@@ -6,8 +6,8 @@
 #Then run the command 'source ~/.bash_profile'
 
 
-IAM_USER_ACCOUNT=jbaughman@beyondfinance.com
-MFA_SERIAL_NUM=arn:aws:iam::078342479505:mfa/jbaughman@beyondfinance.com
+IAM_USER_ACCOUNT=johndoe@example.com
+MFA_SERIAL_NUM=arn:aws:iam::000000000000:mfa/johndoe@example.com
 file_path="/tmp/data.json"
 
 #Prompt user for MFA token
